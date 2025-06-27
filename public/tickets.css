@@ -1,3 +1,177 @@
+::-moz-selection {
+    text-shadow: none;
+    background: var(--primary-color);
+    color: #fff;
+}
+
+::selection {
+    text-shadow: none;
+    background: var(--primary-color);
+    color: #fff;
+}
+
+/* End Variables */
+/* Start Global Rules */
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--white-color);
+    font-family: var(--body-fonts), sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 2;
+    color: var(--secondary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--title-fonts);
+    color: var(--dark-color);
+    font-style: normal;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+    color: inherit;
+    text-decoration: none !important;
+}
+
+h1 {
+    font-size: 40px;
+    font-style: normal;
+    line-height: 48px;
+}
+
+h2 {
+    font-size: 36px;
+    font-style: normal;
+    line-height: 44px;
+}
+
+h3 {
+    font-size: 32px;
+    font-style: normal;
+    line-height: 40px;
+}
+
+h4 {
+    font-size: 28px;
+    font-style: normal;
+    line-height: 36px;
+}
+
+h5 {
+    font-size: 24px;
+    font-style: normal;
+    line-height: 32px;
+}
+
+h6 {
+    font-size: 20px;
+    font-style: normal;
+    line-height: 28px;
+}
+
+/*===== HTML Tags =====*/
+a,
+.button {
+    color: var(--primary-color);
+    outline: none !important;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none !important;
+}
+
+a:focus,
+a:hover {
+    color: var(--primary-color);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+pre {
+    background: var(--white-color);
+    padding: 15px;
+    border: 1px solid var(--grey-color);
+}
+
+hr {
+    margin: 0;
+    padding: 0px;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 0px;
+}
+
+b,
+strong {
+    font-weight: 600;
+}
+
+ul {
+    list-style: none;
+}
+
+/* === Arabic RTL Compatibility === */
+body {
+  direction: rtl;
+  font-family: 'Cairo', sans-serif; /* Set main Arabic font */
+}
+
+/* Apply nice Arabic font to heading */
+h1 {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Right-align ticket content */
+.ticket {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.ticket-info {
+  align-items: flex-end;
+}
+
+/* Align on small screens too */
+@media (max-width: 600px) {
+  .ticket {
+    align-items: flex-end;
+  }
+}
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,22 +194,24 @@ h1 {
     margin: auto;
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 15px;
 }
 
 .ticket {
     background-color: rgba(0, 0, 0, 0.75);
-    border-left: 5px solid #00ffc8;
+    border-right: 5px solid #00ffc8;
     padding: 15px 20px;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     box-shadow: 0 0 12px #00ffcc44;
 }
 
 .ticket-info {
     display: flex;
+    align-items: start;
     flex-direction: column;
 }
 
@@ -52,7 +228,7 @@ h1 {
 @media (max-width: 600px) {
     .ticket {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: flex-end;
         gap: 10px;
     }
 }

@@ -6,9 +6,9 @@ document
     const form = event.target;
     const formData = new FormData(form);
 
-    let userName = formData.get("userName");
+    let userName = formData.get("name");
     let phone = formData.get("phone");
-    let seatNo = formData.get("seatNo");
+    let seatNo = formData.get("seatNum");
     console.log(`User ${userName} ${phone} ${seatNo}`);
 
     const res = await fetch("/ticket/add", {
@@ -33,13 +33,19 @@ document
 
       // Show success message and QR
       document.getElementById("result").innerHTML = `
-          <h3>Ticket Created!</h3>
-          <p><strong>ID:</strong> ${result.ticket._id}</p>
-          <p><strong>View Ticket:</strong> <a href="${result.link}" target="_blank">${result.link}</a></p>
+          <h3>تم حجز تذكرة</h3>
+          <p><strong>الرقم:</strong> <p>${result.ticket._id}</p></p>
+          <p><strong>عرض التذكرة:</strong> <p><a href="${result.link}" target="_blank">${result.link}</a></p></p>
           <img src="${qrData}" alt="QR Code" style="width:200px;"/>
-          <p><em>QR Code was automatically downloaded.</em></p>
+          <p><em>تم تحميل رمز QR تلقائيًا.</em></p>
         `;
     } else {
       alert("Failed to create ticket.");
     }
+    document.getElementById("result").style.display = "block";
+    form.reset();
   });
+
+document.getElementById("viewTickets").addEventListener("click", () => {
+  window.location.href = "/tickets";
+ });
