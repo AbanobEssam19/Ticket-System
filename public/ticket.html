@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket</title>
+</head>
+<body>
+    <p id="name">name</p>
+    <p id="phone"></p>
+    <p id="seatNo"></p>
+    <script>
+        async function loadTicket() {
+            const id = window.location.pathname.split('/').pop();
+            const res = await fetch(`/api/ticket/${id}`);
+    
+            const data = await res.json();
+            console.log(data);
+    
+            document.getElementById('name').textContent = data.ticket.name;
+            document.getElementById('phone').textContent = data.ticket.phone;
+            document.getElementById('seatNo').textContent = data.ticket.seatNum;
+        }
+    
+        loadTicket();
+    </script>
+</body>
+
+</html>

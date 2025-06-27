@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Styled Page</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Hello with CSS!</h1>
-  <p>This is styled using an external CSS file.</p>
-</body>
+  <head>
+    <title>G++ Ticket System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Ticket System</h1>
+    <form id="ticketForm">
+      <input type="text" placeholder="Enter Name" name="userName" />
+      <input type="text" placeholder="Enter Phone" name="phone" />
+      <input type="text" placeholder="Enter SeatNo." name="seatNo" />
+      <button type="submit">Book</button>
+    </form>
+    <div id="result" style="margin-top: 20px"></div>
+    <script src="./script.js"></script>
+  </body>
 </html>
