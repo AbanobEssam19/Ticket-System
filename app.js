@@ -32,13 +32,21 @@ app.post('/ticket/add', async (req, res) => {
 })
 
 app.get('/api/ticket/:id', async (req, res) => {
-  console.log('API /api/ticket/:id called', req.params.id);
   const ticket = await tickets.findById(req.params.id);
   return res.status(200).json({ticket: ticket});
 })
 
+app.get('/api/tickets', async (req, res) => {
+  const ticket = await tickets.find({});
+  return res.status(200).json({tickets: ticket});
+})
+
 app.get('/ticket/:id', (req, res) => {
   res.sendFile(path.join(__dirname, 'public','ticket.html'));
+});
+
+app.get('/tickets', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public','tickets.html'));
 });
  
 app.listen(3000, () => {
