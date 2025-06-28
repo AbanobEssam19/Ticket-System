@@ -16,7 +16,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: userName, phone: phone, seatNum: seatNo }),
+      body: JSON.stringify({ name: userName, phone: phone, seatNum: seatNo, domain: window.location.origin }),
     });
 
     const result = await res.json();

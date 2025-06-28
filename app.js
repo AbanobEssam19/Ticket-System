@@ -22,11 +22,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/ticket/add', async (req, res) => {
-  const {name, phone, seatNum} = req.body;
+  const {name, phone, seatNum, domain} = req.body;
   let ticket = new tickets({name, phone, seatNum});
   ticket = await ticket.save();
   console.log(ticket);
-  const link = `http://localhost:3000/ticket/${ticket._id}`;
+  const link = `${domain}/ticket/${ticket._id}`;
   const qr = await QRCODE(link);
   return res.status(200).json({ticket: ticket, qr: qr, link: link});
 })
