@@ -1,3 +1,4 @@
+verify();
 document
   .getElementById("ticketForm")
   .addEventListener("submit", async (event) => {
@@ -7,7 +8,16 @@ document
     const formData = new FormData(form);
 
     let userName = formData.get("name");
+    
     let phone = formData.get("phone");
+    let regex = /^01[0-2,5]{1}[0-9]{8}$/;
+    if (!regex.test(phone)) {
+      document.getElementById("errorMessege").style.display = "block";
+      console.log("Invalid phone number");
+      return;
+    }
+    document.getElementById("errorMessege").style.display = "none";
+
     let seatNo = formData.get("seatNum");
     console.log(`User ${userName} ${phone} ${seatNo}`);
 
@@ -48,4 +58,21 @@ document
 
 document.getElementById("viewTickets").addEventListener("click", () => {
   window.location.href = "/tickets";
- });
+});
+ 
+async function verify() {
+  const token = localStorage.getItem("token");
+  const res = await fetch("/api/verify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  
+  if (!res.ok) {
+    window.location.href = "/login";
+  }
+}
+
+

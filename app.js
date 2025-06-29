@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 app.use(express.json()); 
 
@@ -15,7 +16,9 @@ require("./mongodb");
 require("./qr")
 
 const tickets = require("./models/ticket");
+const users = require("./models/user");
 const { QRCODE } = require('./qr');
+const jwt = require('jsonwebtoken');
  
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public','index.html'));
@@ -48,6 +51,50 @@ app.get('/ticket/:id', (req, res) => {
 app.get('/tickets', (req, res) => {
   res.sendFile(path.join(__dirname, 'public','tickets.html'));
 });
+
+app.delete('/api/ticket/delete/:id', async (req, res) => {
+  await tickets.findByIdAndDelete(req.params.id);
+  return res.status(200).json({messege: "deleted successfully"});
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public','login.html'));
+})
+
+app.post('/users/add', async (req, res) => {
+  const { name, password } = req.body;
+  let user = new users({ name, password });
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+  user = await user.save();
+  return res.status(200).json({user: user});
+})
+
+app.post('/users/login', async (req, res) => {
+  const { name, password } = req.body;
+  const user = await users.findOne({ name });
+  if (!user) {
+    return res.status(400).json({ messege: "Invalid credentials" });
+  }
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (validPassword) {
+    const token = user.generateAuthToken();
+    return res.status(200).json({ token: token });
+  }
+  else {
+    return res.status(400).json({ messege: "Invalid credentials" });
+  }
+});
+
+app.post('/api/verify', (req, res) => {
+  const { token } = req.body;
+  jwt.verify(token, process.env.JWT_PRIVATE_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(400).json({ messege: "Invalid token" });
+    }
+    return res.status(200).json({ messege: "Valid token" });
+  })
+})
  
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');

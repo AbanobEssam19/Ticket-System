@@ -1,50 +1,129 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>G++ Tickets</title>
   <!-- Font Awesome Library -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Google Fonts (Arabic Font) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-  <link rel="stylesheet" href="tickets.css">
+  <!-- Google Fonts (Arabic Font) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tickets.css" />
 </head>
+
 <body>
+  <div class="search-container">
+    <input type="search" id="searchBar" placeholder="ابحث باسم أو رقم المقعد" />
+    <button id="searchButton">بحث</button>
+  </div>
   <h1>اسماء الحجز</h1>
 
-  <div class="ticket-list" id="ticket-list">
-    
+  <div class="ticket-list" id="ticket-list"></div>
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <p>هل أنت متأكد أنك تريد حذف هذه التذكرة؟</p>
+      <div class="modal-buttons">
+        <button id="confirmDeleteBtn" class="confirm">تأكيد</button>
+        <button id="cancelDeleteBtn" class="cancel">إلغاء</button>
+      </div>
+    </div>
   </div>
+  
   <script>
+    verify();
+    async function verify() {
+      const token = localStorage.getItem("token");
+      const res = await fetch("/api/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
+  
+      if (!res.ok) {
+        window.location.href = "/login";
+      }
+    }
+    let tickets;
     async function loadTickets() {
-      const res = await fetch('/api/tickets');
+      const res = await fetch("/api/tickets");
       const data = await res.json();
-      const tickets = data.tickets;
-      const ticketList = document.getElementById('ticket-list');
+      tickets = data.tickets;
+      const ticketList = document.getElementById("ticket-list");
+      ticketList.innerHTML = "";
       let i = 1;
       for (const ticket of tickets) {
-          ticketList.innerHTML += `
-          <div class="ticket">
-            <div class="ticket-info">
-            <div class="ticket-name">${i++} - ${ticket.name}</div>
-              <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seatNum}</div>
-            </div>
-          </div>
-          `
+        ticketList.innerHTML += `
+                <div class="ticket" id="${ticket._id}">
+                  <i class="fas fa-trash" onclick="deleteTicket(event)"></i>
+                  <div class="ticket-info">
+                  <div class="ticket-name">${i++} - ${ticket.name}</div>
+                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seatNum
+          }
+                </div>
+                  </div>
+                </div>
+                `;
       }
     }
     loadTickets();
+    document.getElementById("searchButton").addEventListener("click", () => {
+      const val = document.getElementById("searchBar").value;
+      const filteredTickets = tickets.filter(
+        (ticket) =>
+          ticket.name.includes(val) ||
+          ticket.phone.includes(val) ||
+          ticket.seatNum.includes(val)
+      );
+      const ticketList = document.getElementById("ticket-list");
+      ticketList.innerHTML = "";
+      let i = 1;
+      for (const ticket of filteredTickets) {
+        ticketList.innerHTML += `
+                <div class="ticket" id="${ticket._id}">
+                  <i class="fas fa-trash" onclick="deleteTicket(event)"></i>
+                  <div class="ticket-info">
+                  <div class="ticket-name">${i++} - ${ticket.name}</div>
+                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seatNum
+          }
+                </div>
+                  </div>
+                </div>
+                `;
+      }
+    });
+    let ticketToDelete = null;
+
+    function deleteTicket(event) {
+      ticketToDelete = event.target.closest(".ticket");
+      document.getElementById("confirmModal").style.display = "flex";
+    }
+
+    document
+      .getElementById("confirmDeleteBtn")
+      .addEventListener("click", () => {
+        const id = ticketToDelete.id;
+        fetch(`/api/ticket/delete/${id}`, {
+          method: "DELETE",
+        }).then(() => {
+          ticketToDelete = null;
+          document.getElementById("confirmModal").style.display = "none";
+          loadTickets();
+        });
+      });
+
+    document
+      .getElementById("cancelDeleteBtn")
+      .addEventListener("click", () => {
+        ticketToDelete = null;
+        document.getElementById("confirmModal").style.display = "none";
+      });
   </script>
 </body>
+
 </html>

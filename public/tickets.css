@@ -227,8 +227,151 @@ h1 {
 
 @media (max-width: 600px) {
     .ticket {
-        flex-direction: column;
+        flex-direction: row-reverse;
+        justify-content: space-between;
         align-items: flex-end;
         gap: 10px;
     }
+}
+
+/* === Search bar styling === */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+#searchBar {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  width: 250px;
+  max-width: 90%;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #00ffc8;
+}
+
+#searchButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #00ffc8;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#searchButton:hover {
+  background-color: #00ccaa;
+}
+
+/* === Trash icon adjustment === */
+.ticket-details i.fa-trash {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #ff5555;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.ticket-details i.fa-trash:hover {
+  transform: scale(1.1);
+  color: #ff7777;
+}
+
+.ticket {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.ticket .fa-trash {
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.ticket .fa-trash:hover {
+  color: #ff7777;
+  transform: scale(1.1);
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #121e2a;
+  color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 15px #00ffc8;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.modal-buttons .confirm,
+.modal-buttons .cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-buttons .confirm {
+  background-color: #00ffc8;
+  color: #000;
+}
+
+.modal-buttons .cancel {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.modal-buttons .confirm:hover {
+  background-color: #00ccaa;
+}
+
+.modal-buttons .cancel:hover {
+  background-color: #ff7777;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

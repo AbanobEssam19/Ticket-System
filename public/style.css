@@ -1,13 +1,13 @@
 ::-moz-selection {
     text-shadow: none;
     background: var(--primary-color);
-    color: #fff;
+    color: #3390FF;
 }
 
 ::selection {
     text-shadow: none;
     background: var(--primary-color);
-    color: #fff;
+    color: #3390FF;
 }
 
 /* End Variables */
@@ -295,4 +295,9 @@ button:hover {
   max-width: 100%;
   border-radius: 6px;
   border: 1px solid #00ffc860;
+}
+
+#errorMessege{
+    display: none;
+    color: rgb(179, 22, 22);
 }
