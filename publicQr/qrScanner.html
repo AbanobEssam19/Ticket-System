@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ماسح QR - G++</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Theme -->
+    <link rel="stylesheet" href="./qrScanner.css" />
+
+    <!-- QR Code Library -->
+    <script
+      src="https://unpkg.com/html5-qrcode"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ماسح رمز QR</h1>
+      <button id="startScan">بدء المسح</button>
+      <div id="reader"></div>
+
+      <div class="result-box">
+        <p><strong>الرابط:</strong> <a id="link" target="_blank"></a></p>
+        <p id="result"></p>
+        <iframe id="ticketFrame" src="" frameborder="0"></iframe>
+      </div>
+    </div>
+
+    <script src="./qrScanner.js"></script>
+  </body>
+</html>

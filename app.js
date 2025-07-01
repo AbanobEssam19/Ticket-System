@@ -1,13 +1,16 @@
 const express = require('express');
 
 const app = express();
+const app2 = express();
 
 const path = require('path');
 const bcrypt = require('bcrypt');
 
 app.use(express.json()); 
+app2.use(express.json()); 
 
 app.use(express.static('public'));
+app2.use(express.static('publicQr'));
 
 require("dotenv").config();
 
@@ -19,6 +22,7 @@ const tickets = require("./models/ticket");
 const users = require("./models/user");
 const { QRCODE } = require('./qr');
 const jwt = require('jsonwebtoken');
+const { boolean } = require('joi');
  
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public','index.html'));
@@ -95,8 +99,24 @@ app.post('/api/verify', (req, res) => {
     return res.status(200).json({ messege: "Valid token" });
   })
 })
- 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+
+app2.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'publicQr','qrScanner.html'));
 });
 
+app2.get('/api/scan/:id', async (req, res) => {
+  const id = req.params.id;
+  const ticket = await tickets.findById(id);
+  const previousScanned = ticket.isScanned;
+  ticket.isScanned = true;
+  await tickets.findByIdAndUpdate(id, ticket);
+  return res.status(200).json({ ticket: ticket, previousScanned: previousScanned });
+});
+ 
+app.listen(3000, () => {
+  console.log('Ticket System app listening on port 3000!');
+});
+
+app2.listen(5000, () => {
+  console.log('Qr scanner app listening on port 5000!');
+});
