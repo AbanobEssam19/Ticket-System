@@ -1,3 +1,20 @@
+async function verify() {
+  const token = localStorage.getItem("token");
+  const res = await fetch("/api/verify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  
+  if (!res.ok) {
+    window.location.href = "/login";
+  }
+}
+
+verify();
+
 const html5QrCode = new Html5Qrcode("reader");
     let isScanning = false;
 

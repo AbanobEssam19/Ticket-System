@@ -59,6 +59,10 @@ document
 document.getElementById("viewTickets").addEventListener("click", () => {
   window.location.href = "/tickets";
 });
+
+document.getElementById("qrScanner").addEventListener("click", () => {
+  window.location.href = "/qr";
+});
  
 async function verify() {
   const token = localStorage.getItem("token");
