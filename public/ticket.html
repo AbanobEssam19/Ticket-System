@@ -189,7 +189,7 @@
     
             document.getElementById('name').textContent = data.ticket.name;
             // document.getElementById('phone').textContent = data.ticket.phone;
-            document.getElementById('seatNo').textContent = data.ticket.seatNum;
+            document.getElementById('seatNo').textContent = data.ticket.seatNum + ' ' + data.ticket.seatPosition;
         }
     
         loadTicket();

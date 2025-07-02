@@ -12,13 +12,24 @@ document
     let phone = formData.get("phone");
     let regex = /^01[0-2,5]{1}[0-9]{8}$/;
     if (!regex.test(phone)) {
-      document.getElementById("errorMessege").style.display = "block";
+      document.getElementById("errorPhoneMessege").style.display = "block";
       console.log("Invalid phone number");
       return;
     }
-    document.getElementById("errorMessege").style.display = "none";
+    document.getElementById("errorPhoneMessege").style.display = "none";
 
+
+    let seatRegex = /^[A-P](L|R)([1-9]|1[0-2])$/;
     let seatNo = formData.get("seatNum");
+    let seatPos = formData.get("seatPos");
+    console.log(seatPos);
+
+    if(seatRegex.test(seatNo) == false) {
+      document.getElementById("errorSeatMessege").style.display = "block";
+      return;
+    }
+    document.getElementById("errorSeatMessege").style.display = "none";
+
     console.log(`User ${userName} ${phone} ${seatNo}`);
 
     const res = await fetch("/ticket/add", {
@@ -26,7 +37,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: userName, phone: phone, seatNum: seatNo, domain: window.location.origin }),
+      body: JSON.stringify({ name: userName, phone: phone, seatNum: seatNo, seatPosition: seatPos, domain: window.location.origin }),
     });
 
     const result = await res.json();
@@ -49,12 +60,13 @@ document
           <img src="${qrData}" alt="QR Code" style="width:200px;"/>
           <p><em>تم تحميل رمز QR تلقائيًا.</em></p>
         `;
+        document.getElementById("result").style.display = "block";
+        form.reset();
     } else {
-      alert("Failed to create ticket.");
+      document.getElementById("seatTakenModal").style.display = "flex";
     }
-    document.getElementById("result").style.display = "block";
-    form.reset();
   });
+  
 
 document.getElementById("viewTickets").addEventListener("click", () => {
   window.location.href = "/tickets";
@@ -62,6 +74,10 @@ document.getElementById("viewTickets").addEventListener("click", () => {
 
 document.getElementById("qrScanner").addEventListener("click", () => {
   window.location.href = "/qr";
+});
+
+document.getElementById("closeModalBtn").addEventListener("click", () => {
+  document.getElementById("seatTakenModal").style.display = "none";
 });
  
 async function verify() {

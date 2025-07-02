@@ -297,7 +297,110 @@ button:hover {
   border: 1px solid #00ffc860;
 }
 
-#errorMessege{
+#errorSeatMessege,
+#errorPhoneMessege{
     display: none;
     color: rgb(179, 22, 22);
+}
+
+/* radio button */
+/* Custom styled radio buttons */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  outline: none;
+  background-color: transparent;
+  margin-left: 8px;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: 0.2s ease-in-out;
+}
+
+input[type="radio"]:checked::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="radio"]:hover {
+  box-shadow: 0 0 5px #00ffc8aa;
+}
+
+input[type="radio"] + label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 15px;
+  color: #f9f9f9;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* pop up message */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #1e2a38;
+  color: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ffc8aa;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  animation: fadeInScale 0.3s ease;
+  max-width: 90%;
+  width: 300px;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  background-color: #00ffc8;
+  border: none;
+  color: #000;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #00ccaa;
+}
+
+@keyframes fadeInScale {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

@@ -17,6 +17,10 @@ const Tickets = mongoose.model('Tickets', {
     isScanned: {
         type: Boolean,
         default: false
+    },
+    seatPosition: {
+        type: String,
+        required: true
     }
 })
 

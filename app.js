@@ -26,8 +26,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/ticket/add', async (req, res) => {
-  const {name, phone, seatNum, domain} = req.body;
-  let ticket = new tickets({name, phone, seatNum});
+  const { name, phone, seatNum, seatPosition, domain } = req.body;
+  console.log(req.body);
+  const existTicket = await tickets.findOne({ seatNum: seatNum, seatPosition: seatPosition });
+  if(existTicket) {
+    return res.status(400).json({messege: "seat is already taken"});
+  }
+  let ticket = new tickets({ name, phone, seatNum, seatPosition });
+  
   ticket = await ticket.save();
   console.log(ticket);
   const link = `${domain}/ticket/${ticket._id}`;

@@ -45,7 +45,7 @@
           placeholder="مثال: 01012345678"
           required
         />
-        <p id="errorMessege">رقم الهاتف غير صحيح</p>
+        <p id="errorPhoneMessege">رقم الهاتف خاطئ</p>
 
         <label for="seatNum">رقم الكرسي</label>
         <input
@@ -55,6 +55,19 @@
           placeholder="مثال: B12"
           required
         />
+        <p id="errorSeatMessege">رقم الكرسي خاطئ</p>
+        <label for="seatPos">المكان</label>
+        <input type="radio" id="up" name="seatPos" value="up" required />
+        <label for="up">فوق</label>
+        <input
+          type="radio"
+          id="down"
+          name="seatPos"
+          value="down"
+          required
+          checked
+        />
+        <label for="down">تحت</label>
 
         <button type="submit">حجز</button>
       </form>
@@ -62,6 +75,13 @@
       <button id="viewTickets">عرض التذاكر</button>
       <button id="qrScanner">QR Scanner</button>
     </div>
+    <div id="seatTakenModal" class="modal">
+      <div class="modal-content">
+        <p>عذرًا، هذا الكرسي محجوز مسبقاً.</p>
+        <button id="closeModalBtn">حسنًا</button>
+      </div>
+    </div>
+
     <script src="./script.js"></script>
   </body>
 </html>
