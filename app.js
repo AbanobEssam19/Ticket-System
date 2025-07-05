@@ -42,12 +42,12 @@ app.post('/ticket/add', async (req, res) => {
 })
 
 app.get('/api/ticket/:id', async (req, res) => {
-  const ticket = await tickets.findById(req.params.id);
+  const ticket = await tickets.findById(req.params.id).populate();
   return res.status(200).json({ticket: ticket});
 })
 
 app.get('/api/tickets', async (req, res) => {
-  const ticket = await tickets.find({});
+  const ticket = await tickets.find({}).populate();
   return res.status(200).json({tickets: ticket});
 })
 

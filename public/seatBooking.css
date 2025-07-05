@@ -1,67 +1,199 @@
 .theater {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 10px;
 }
 
 .theater-layout {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    /* space between left and right */
+display: flex;
+flex-direction: column;
+justify-content: center;
+background-color: #1e2a38;
+box-shadow: 0 0 25px #00ffc8aa;
+padding: 20px;
+border-radius: 15px;
+color: #00ffc8;
+font-family: 'Cairo', sans-serif;
+position: relative;
+z-index: 1;
+width: 100%;
+max-width: 100%;
+overflow-x: auto;
+}
+
+.theater-layout .sides {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+flex-wrap: nowrap;
+gap: 15px;
+width: 100%;
+overflow-x: auto;
 }
 
 .row-label {
-    width: 40px;
-    text-align: left;
-    padding-left: 10px;
-    font-weight: bold;
+width: 30px;
+text-align: left;
+padding-left: 6px;
+font-weight: bold;
+color: #00ffc8;
+font-size: 0.8rem;
 }
 
 .seat-row {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    margin-bottom: 5px;
+display: flex;
+flex-direction: row-reverse;
+align-items: center;
+margin-bottom: 4px;
 }
 
 #left-seating .seat-row {
-    flex-direction: row;
+flex-direction: row;
 }
 
 .seat {
-    width: 30px;
-    height: 30px;
-    margin: 2px;
-    background-color: #b0c4de;
-    text-align: center;
-    line-height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
+width: 22px;
+height: 22px;
+margin: 1px;
+background-color: #1e2a38;
+text-align: center;
+line-height: 22px;
+border-radius: 5px;
+cursor: pointer;
+color: #00ffc8;
+font-weight: bold;
+border: 1px solid #00ffc855;
+font-size: 0.7rem;
+transition: background 0.3s ease;
 }
 
 .seat.selected {
-    background-color: #3498db;
-    color: white;
+background-color: #00ffc8;
+color: #000;
 }
 
 .seat.disabled {
-    background-color: #e74c3c;
-    cursor: not-allowed;
+background-color: #e74c3c;
+cursor: not-allowed;
+color: white;
 }
 
 .stage {
-    margin-top: 20px;
-    background: #8B4513;
-    color: white;
-    text-align: center;
-    padding: 10px 50px;
-    border-radius: 5px;
-    font-weight: bold;
+margin-top: 15px;
+text-align: center;
+padding: 6px 20px;
+border-radius: 8px;
+font-weight: bold;
+box-shadow: 0 0 10px #00ffc877;
+font-family: 'Cairo', sans-serif;
+color: #fff;
+background-color: #2d3d4d;
+font-size: 0.9rem;
 }
 
 .side-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
+font-weight: bold;
+margin-bottom: 6px;
+text-align: center;
+color: #00ffc8;
+font-family: 'Cairo', sans-serif;
+font-size: 0.9rem;
+}
+
+#submitButton {
+margin-top: 15px;
+padding: 12px 20px;
+background-color: #00ffc8;
+color: #000;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+font-size: 1rem;
+cursor: pointer;
+transition: background 0.3s ease;
+font-family: 'Cairo', sans-serif;
+box-shadow: 0 0 10px #00ffc888;
+max-width: 240px;
+width: 100%;
+align-self: center;
+}
+
+#submitButton:hover {
+background-color: #00bfa6;
+}
+
+/* Portrait phones: tighter layout */
+@media (max-width: 768px) and (orientation: portrait) {
+.theater-layout {
+padding: 10px;
+}
+
+.theater-layout .sides {
+flex-direction: column;
+align-items: center;
+gap: 15px;
+}
+
+.seat {
+width: 20px;
+height: 20px;
+line-height: 20px;
+font-size: 0.65rem;
+
+}
+
+.stage {
+font-size: 0.85rem;
+padding: 5px 16px;
+}
+
+.side-title {
+font-size: 0.85rem;
+}
+
+#submitButton {
+font-size: 0.95rem;
+padding: 10px;
+
+}
+}
+
+/* Landscape phones: horizontal seating layout */
+@media (max-width: 768px) and (orientation: landscape) {
+.theater-layout {
+padding: 12px;
+}
+
+.theater-layout .sides {
+flex-direction: row;
+justify-content: center;
+flex-wrap: nowrap;
+gap: 10px;
+}
+
+.seat {
+width: 18px;
+height: 18px;
+line-height: 18px;
+font-size: 0.6rem;
+}
+
+.row-label {
+font-size: 0.65rem;
+}
+
+.side-title {
+font-size: 0.8rem;
+}
+
+.stage {
+font-size: 0.8rem;
+padding: 4px 14px;
+}
+
+#submitButton {
+font-size: 0.9rem;
+padding: 10px;
+}
 }

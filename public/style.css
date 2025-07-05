@@ -404,3 +404,60 @@ input[type="radio"] + label {
     opacity: 1;
   }
 }
+
+/* Seat selection layout */
+.seat-selection {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.seat-selection .seatNumberValue{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seat-selection .seatNumberValue label{
+  margin-top: 0;
+  margin-left: 15px;
+}
+
+#chooseSeat {
+  width: auto;
+  padding: 10px 20px;
+  background-color: #00ffc8;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: 'Cairo', sans-serif;
+}
+
+#chooseSeat:hover {
+  background-color: #00bfa6;
+}
+
+#seatNumber {
+  background-color: #1e2a38;
+  color: #00ffc877; /* Same as placeholder color */
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+  border: 1px solid #00ffc860;
+  box-shadow: 0 0 5px #00ffc844;
+  margin-top: 5px;
+}
+
+

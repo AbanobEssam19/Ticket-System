@@ -178,7 +178,7 @@
       <div class="value" id="seatNo"></div>
     </div>
 
-    <div class="footer">مسرح طوسون · 8 أغسطس ٢٠٢٥ </div>
+    <div class="footer">مسرح طوسون · ٩ أغسطس ٢٠٢٥ </div>
     <script>
         async function loadTicket() {
             const id = window.location.pathname.split('/').pop();
@@ -189,7 +189,7 @@
     
             document.getElementById('name').textContent = data.ticket.name;
             // document.getElementById('phone').textContent = data.ticket.phone;
-            document.getElementById('seatNo').textContent = data.ticket.seatNum + ' ' + data.ticket.seatPosition;
+            document.getElementById('seatNo').textContent = data.ticket.seat.row + ' ' + data.ticket.seat.number;
         }
     
         loadTicket();
