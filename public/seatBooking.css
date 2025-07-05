@@ -1,3 +1,9 @@
+body{
+    background-image: url('https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed  
+}
 .theater {
 display: flex;
 flex-direction: column;
