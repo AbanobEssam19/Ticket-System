@@ -7,9 +7,9 @@ document
     const form = event.target;
     const formData = new FormData(form);
 
-    let userName = formData.get("name");
+    let userName = sessionStorage.getItem("name");
     
-    let phone = formData.get("phone");
+    let phone = sessionStorage.getItem("phone");
     let regex = /^01[0-2,5]{1}[0-9]{8}$/;
     if (!regex.test(phone)) {
       document.getElementById("errorPhoneMessege").style.display = "block";
@@ -19,25 +19,36 @@ document
     document.getElementById("errorPhoneMessege").style.display = "none";
 
 
-    let seatRegex = /^[A-P](L|R)([1-9]|1[0-2])$/;
-    let seatNo = formData.get("seatNum");
-    let seatPos = formData.get("seatPos");
-    console.log(seatPos);
+    // let seatRegex = /^[A-P](L|R)([1-9]|1[0-2])$/;
+    // let seatNo = formData.get("seatNum");
+    // let seatPos = formData.get("seatPos");
+    // console.log(seatPos);
 
-    if(seatRegex.test(seatNo) == false) {
+    // if(seatRegex.test(seatNo) == false) {
+    //   document.getElementById("errorSeatMessege").style.display = "block";
+    //   return;
+    // }
+    // document.getElementById("errorSeatMessege").style.display = "none";
+
+    // console.log(`User ${userName} ${phone} ${seatNo}`);
+
+    
+    const seatSession = sessionStorage.getItem('selectedSeat');
+    if (!seatSession) {
       document.getElementById("errorSeatMessege").style.display = "block";
       return;
     }
     document.getElementById("errorSeatMessege").style.display = "none";
+    const row = seatSession.split('-')[0];
+    const seatNum = seatSession.split('-')[1];
 
-    console.log(`User ${userName} ${phone} ${seatNo}`);
 
     const res = await fetch("/ticket/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: userName, phone: phone, seatNum: seatNo, seatPosition: seatPos, domain: window.location.origin }),
+      body: JSON.stringify({ name: userName, phone: phone, row: row, seatNum: seatNum, domain: window.location.origin }),
     });
 
     const result = await res.json();
@@ -62,6 +73,10 @@ document
         `;
         document.getElementById("result").style.display = "block";
         form.reset();
+        sessionStorage.removeItem("selectedSeat");
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("phone");
+        document.getElementById("seatNumber").textContent = "";
     } else {
       document.getElementById("seatTakenModal").style.display = "flex";
     }
@@ -96,3 +111,32 @@ async function verify() {
 }
 
 
+document.getElementById("chooseSeat").addEventListener("click", () => {
+  window.location.href = "/seat";
+})
+
+const seatSession = sessionStorage.getItem('selectedSeat');
+
+if (seatSession) {
+  const row = seatSession.split('-')[0];
+  const number = seatSession.split('-')[1];
+  document.getElementById("seatNumber").textContent = `${row}${number}`;
+}
+
+document.getElementById("name").addEventListener("blur", () => {
+  sessionStorage.setItem("name", document.getElementById("name").value);
+})
+
+document.getElementById("phone").addEventListener("blur", () => {
+  sessionStorage.setItem("phone", document.getElementById("phone").value);
+})
+
+const nameSession = sessionStorage.getItem('name');
+if (nameSession) {
+  document.getElementById("name").value = nameSession;
+}
+
+const phoneSession = sessionStorage.getItem('phone');
+if (phoneSession) {
+  document.getElementById("phone").value = phoneSession;
+}

@@ -26,13 +26,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/ticket/add', async (req, res) => {
-  const { name, phone, seatNum, seatPosition, domain } = req.body;
+  const { name, phone, row, seatNum, domain } = req.body;
   console.log(req.body);
-  const existTicket = await tickets.findOne({ seatNum: seatNum, seatPosition: seatPosition });
+  const existTicket = await tickets.findOne({ seat: { row: row, number: seatNum} });
   if(existTicket) {
     return res.status(400).json({messege: "seat is already taken"});
   }
-  let ticket = new tickets({ name, phone, seatNum, seatPosition });
+  let ticket = new tickets({ name, phone, seat: { row, number: seatNum } });
   
   ticket = await ticket.save();
   console.log(ticket);
@@ -115,6 +115,16 @@ app.get('/api/scan/:id', async (req, res) => {
   await tickets.findByIdAndUpdate(id, ticket);
   return res.status(200).json({ ticket: ticket, previousScanned: previousScanned });
 });
+
+app.get("/seat", (req, res) => {
+  res.sendFile(path.join(__dirname, 'public','seatBooking.html'));
+})
+
+app.get("/api/selectedSeats", async (req, res) => {
+  const allTickets = await tickets.find({}, 'seat');
+  const seatInfos = allTickets.map(ticket => ticket.seat);
+  return res.status(200).json({ selectedSeats: seatInfos });
+})
  
 app.listen(3000, () => {
   console.log('Ticket System app listening on port 3000!');

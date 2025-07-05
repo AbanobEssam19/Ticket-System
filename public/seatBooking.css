@@ -1,0 +1,67 @@
+.theater {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.theater-layout {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    /* space between left and right */
+}
+
+.row-label {
+    width: 40px;
+    text-align: left;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.seat-row {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+#left-seating .seat-row {
+    flex-direction: row;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: #b0c4de;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: #3498db;
+    color: white;
+}
+
+.seat.disabled {
+    background-color: #e74c3c;
+    cursor: not-allowed;
+}
+
+.stage {
+    margin-top: 20px;
+    background: #8B4513;
+    color: white;
+    text-align: center;
+    padding: 10px 50px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.side-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
