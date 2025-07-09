@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config(); // use .env only in local dev
+  require('dotenv').config();
 }
-require('../mongodb');
+const connectDB = require('../mongodb');
 require('../qr');
 const tickets = require('../models/ticket');
 const users = require('../models/user');
@@ -15,6 +15,17 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../public')));
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB(); // Only connects once per instance
+    next();
+  } catch (err) {
+    console.error('DB connection error:', err.message);
+    res.status(500).send('Database connection failed');
+  }
+});
+
 
 app.post('/ticket/add', async (req, res) => {
   const { name, phone, row, seatNum, domain } = req.body;
