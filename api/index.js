@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config(); // use .env only in local dev
+}
 require('../mongodb');
 require('../qr');
 const tickets = require('../models/ticket');
