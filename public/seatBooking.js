@@ -64,6 +64,8 @@ let selectedSeat;
 let selectedSeats = [];
 
 async function fetchSelectedSeats() {
+const loadingOverlay = document.getElementById("loadingOverlay");
+loadingOverlay.style.display = "flex";
   const res = await fetch("/api/selectedSeats");
   const data = await res.json();
   selectedSeats = data.selectedSeats;
@@ -74,6 +76,7 @@ async function fetchSelectedSeats() {
       document.getElementById(id).classList.add("disabled");
     }
   }
+    loadingOverlay.style.display = "none"; 
 }
 
 function createRow(row, parent, isRightSide = true) {

@@ -153,3 +153,8 @@ const phoneSession = sessionStorage.getItem("phone");
 if (phoneSession) {
   document.getElementById("phone").value = phoneSession;
 }
+
+document.getElementById('imageUpload').addEventListener('change', function () {
+  const fileNameSpan = document.getElementById('fileName');
+  fileNameSpan.textContent = this.files.length ? this.files[0].name : 'لم يُحدَّد ملف بعد';
+});

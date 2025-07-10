@@ -1,169 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title> Ticket info </title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cairo:wght@400;700&display=swap"
+    rel="stylesheet">
 </head>
 <style>
-    body {
-  margin: 0;
-  padding: 0;
-  font-family: "Cairo", sans-serif;
-  background-color: #0d0f1c;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  direction: rtl;
-  overflow: hidden;
-}
-
-/* Ticket box */
-.ticket {
-  position: relative;
-  background: linear-gradient(
-      to bottom right,
-      rgba(10, 20, 35, 0.85),
-      rgba(25, 35, 60, 0.85)
-    ),
-    url("https://miro.medium.com/v2/resize:fit:1100/format:webp/1*VUjOm0reXcIhgoinivRtYg.jpeg")
-      no-repeat center/cover;
-
-  border: 2px solid #13adc7;
-  border-radius: 20px;
-  padding: 20px;
-  width: 90%;
-  max-width: 420px;
-  height: 95vh;
-  box-shadow: 0 0 30px rgba(19, 173, 199, 0.3);
-  color: white;
-  text-align: center;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  animation: fadeIn 1.5s ease-out;
-}
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1.5s forwards ease-in;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.glow {
-  animation: glowPulse 2s infinite ease-in-out;
-}
-
-/* Glow animation for G++ */
-@keyframes glowPulse {
-  0%,
-  100% {
-    text-shadow: 0 0 10px #13adc7, 0 0 20px #945dd6;
-  }
-  50% {
-    text-shadow: 0 0 15px #f46737, 0 0 30px #13adc7;
-  }
-}
-
-/* Church name — now inside flow, not absolutely positioned */
-.church-name {
-  font-size: 1rem;
-  color: #ccc;
-  font-weight: 600;
-  line-height: 1.6;
-  margin-bottom: 10px;
-  margin-top: 30px;
-}
-
-/* G++ Event Title */
-.event-name {
-  font-family: "Orbitron", sans-serif;
-  font-size: 8rem;
-  font-weight: 800;
-  background: linear-gradient(to right, #13adc7, #945dd6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glowPulse 2s infinite ease-in-out;
-  margin: 0 auto 5px;
-  line-height: 1.2;
-}
-
-/* Attendee Info Box */
-.attendee-info {
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  text-align: right;
-}
-
-.label {
-  font-size: 0.9rem;
-  color: #aaaaaa;
-}
-
-.value {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: white;
-}
-
-/* Footer */
-.footer {
-  font-size: 1rem;
-  color: #bbbbbb;
-  margin-bottom: 70px;
-}
-
-/* Mobile tweaks */
-@media (max-width: 500px) {
-  .ticket {
-    border-radius: 0;
-    width: 100%;
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Cairo", sans-serif;
+    background-color: #0d0f1c;
     height: 100vh;
-    padding: 20px 15px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+    overflow: hidden;
   }
 
+  /* Ticket box */
+  .ticket {
+    position: relative;
+    background: linear-gradient(to bottom right,
+        rgba(10, 20, 35, 0.85),
+        rgba(25, 35, 60, 0.85)),
+      url("https://miro.medium.com/v2/resize:fit:1100/format:webp/1*VUjOm0reXcIhgoinivRtYg.jpeg") no-repeat center/cover;
+
+    border: 2px solid #13adc7;
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 420px;
+    height: 95vh;
+    box-shadow: 0 0 30px rgba(19, 173, 199, 0.3);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: fadeIn 1.5s ease-out;
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards ease-in;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .glow {
+    animation: glowPulse 2s infinite ease-in-out;
+  }
+
+  /* Glow animation for G++ */
+  @keyframes glowPulse {
+
+    0%,
+    100% {
+      text-shadow: 0 0 10px #13adc7, 0 0 20px #945dd6;
+    }
+
+    50% {
+      text-shadow: 0 0 15px #f46737, 0 0 30px #13adc7;
+    }
+  }
+
+  /* Church name — now inside flow, not absolutely positioned */
   .church-name {
     font-size: 1rem;
+    color: #ccc;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    margin-top: 30px;
   }
 
+  /* G++ Event Title */
   .event-name {
+    font-family: "Orbitron", sans-serif;
     font-size: 8rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #13adc7, #945dd6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glowPulse 2s infinite ease-in-out;
+    margin: 0 auto 5px;
+    line-height: 1.2;
   }
 
-  .subtitle {
-    font-size: 0.95rem;
+  /* Attendee Info Box */
+  .attendee-info {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: right;
   }
 
-  .play-name {
-    font-size: 1.1rem;
+  .label {
+    font-size: 0.9rem;
+    color: #aaaaaa;
   }
-}
+
+  .value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  /* Footer */
+  .footer {
+    font-size: 1rem;
+    color: #bbbbbb;
+    margin-bottom: 70px;
+  }
+
+  
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .info-text {
+      flex-grow: 1;
+    }
+
+    .photo-frame {
+      width: 80px;
+      height: 100px;
+      border: 2px solid #13adc7;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px #13adc788;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+  /* Mobile tweaks */
+  @media (max-width: 500px) {
+    .ticket {
+      border-radius: 0;
+      width: 100%;
+      height: 100vh;
+      padding: 20px 15px;
+    }
+
+    .church-name {
+      font-size: 1rem;
+    }
+
+    .event-name {
+      font-size: 8rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+    }
+
+    .play-name {
+      font-size: 1.1rem;
+    }
+
+
+  }
 </style>
+
 <body>
-    <div class="ticket fade-in">
+  <div class="ticket fade-in">
     <div class="church-name">
       كنيسة الشهيد العظيم مارجرجس بخماروية<br />
       اسرة الشباب الجامعي
@@ -172,27 +205,38 @@
     <div class="event-name glow">++G</div>
 
     <div class="attendee-info">
-      <div class="label">الاسم:</div>
-      <div class="value" id="name"></div>
-      <div class="label">رقم المقعد:</div>
-      <div class="value" id="seatNo"></div>
+      <div class="info-row">
+        <div class="info-text">
+          <div class="label">الاسم:</div>
+          <div class="value" id="name"></div>
+          <div class="label">رقم المقعد:</div>
+          <div class="value" id="seatNo"></div>
+        </div>
+        <div class="photo-frame">
+          <img id="attendeeImage" src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="Attendee Image" />
+        </div>
+      </div>
     </div>
+
 
     <div class="footer">مسرح طوسون · ٩ أغسطس ٢٠٢٥ </div>
     <script>
-        async function loadTicket() {
-            const id = window.location.pathname.split('/').pop();
-            const res = await fetch(`/api/ticket/${id}`);
-    
-            const data = await res.json();
-            console.log(data);
-    
-            document.getElementById('name').textContent = data.ticket.name;
-            // document.getElementById('phone').textContent = data.ticket.phone;
-            document.getElementById('seatNo').textContent = data.ticket.seat.row + data.ticket.seat.number + ' ' + (data.ticket.seat.seatPosition == "up" ? "U" : "D");
+      async function loadTicket() {
+        const id = window.location.pathname.split('/').pop();
+        const res = await fetch(`/api/ticket/${id}`);
+
+        const data = await res.json();
+        console.log(data);
+        document.getElementById('name').textContent = data.ticket.name;
+        // document.getElementById('phone').textContent = data.ticket.phone;
+        document.getElementById('seatNo').textContent = data.ticket.seat.row + data.ticket.seat.number + ' ' + (data.ticket.seat.seatPosition == "up" ? "U" : "D");
+        const imgEl = document.getElementById('attendeeImage');
+        if (data.ticket.image) {
+          imgEl.src = data.ticket.image;
         }
-    
-        loadTicket();
+      }
+
+      loadTicket();
     </script>
 </body>
 

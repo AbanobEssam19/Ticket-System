@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G++ Ticket System</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>G++ Ticket System</title>
+    <!-- Font Awesome Library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <!-- Font Awesome Library -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts (Arabic Font) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Google Fonts (Arabic Font) -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Main Template CSS File -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <!-- Main Template CSS File -->
-  <link rel="stylesheet" href="style.css" />
-</head>
+  <body>
+    <div class="form-container">
+      <h2>حجز تذكرة</h2>
+      <form id="ticketForm">
+        <label for="name">الاسم</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="مثال: جون"
+          required
+        />
 
-<body>
-  <div class="form-container">
-    <h2>حجز تذكرة</h2>
-    <form id="ticketForm">
-      <label for="name">الاسم</label>
-      <input type="text" id="name" name="name" placeholder="مثال: جون" required />
+        <label for="phone">رقم الهاتف</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="مثال: 01012345678"
+          required
+        />
+        <p id="errorPhoneMessege">رقم الهاتف خاطئ</p>
 
-      <label for="phone">رقم الهاتف</label>
-      <input type="tel" id="phone" name="phone" placeholder="مثال: 01012345678" required />
-      <p id="errorPhoneMessege">رقم الهاتف خاطئ</p>
-
-      <div class="seat-selection">
-        <div class="seatNumberValue">
-          <label>رقم الكرسي</label>
-          <p id="seatNumber"></p>
+        <div class="seat-selection">
+          <div class="seatNumberValue">
+            <label>رقم الكرسي</label>
+            <p id="seatNumber"></p>
+          </div>
+          <button id="chooseSeat" type="button">اختر الكرسي</button>
         </div>
-        <button id="chooseSeat" type="button">اختر الكرسي</button>
-      </div>
 
-      <p id="errorSeatMessege">برجاء اختيار رقم الكرسي</p>
-      <!-- <label for="seatPos">المكان</label>
+        <p id="errorSeatMessege">برجاء اختيار رقم الكرسي</p>
+        <!-- <label for="seatPos">المكان</label>
         <input type="radio" id="up" name="seatPos" value="up" required />
         <label for="up">فوق</label>
         <input
@@ -52,45 +70,59 @@
         />
         <label for="down">تحت</label> -->
 
-      <input type="file" id="imageUpload" name="imageUpload" accept="image/*" />
+        <label for="imageUpload">رفع الصورة</label>
+        <div class="custom-file-wrapper">
+          <input
+            type="file"
+            id="imageUpload"
+            name="imageUpload"
+            accept="image/*"
+          />
+          <span class="file-trigger" id="fileTrigger">اختر ملفًا</span>
+          <span class="file-name" id="fileName">لم يُحدَّد ملف بعد</span>
+        </div>
 
-      <button type="submit">حجز</button>
-    </form>
-    <div id="result" style="margin-top: 20px; display: none"></div>
-    <button id="viewTickets">عرض التذاكر</button>
-    <button id="qrScanner">QR Scanner</button>
-  </div>
-  <div id="seatTakenModal" class="modal">
-    <div class="modal-content">
-      <p>عذرًا، هذا الكرسي محجوز مسبقاً.</p>
-      <button id="closeModalBtn">حسنًا</button>
+        <button type="submit">حجز</button>
+      </form>
+      <div id="result" style="margin-top: 20px; display: none"></div>
+      <button id="viewTickets">عرض التذاكر</button>
+      <button id="qrScanner">QR Scanner</button>
     </div>
-  </div>
-
-  <div id="loadingOverlay" style="display: none;">
-    <div class="loading-backdrop">
-      <div style="
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: auto;
-  "></div>
-      <p class="loading-text">جاري إضافة التذكرة...</p>
+    <div id="seatTakenModal" class="modal">
+      <div class="modal-content">
+        <p>عذرًا، هذا الكرسي محجوز مسبقاً.</p>
+        <button id="closeModalBtn">حسنًا</button>
+      </div>
     </div>
-  </div>
 
+    <div id="loadingOverlay" style="display: none">
+      <div class="loading-backdrop">
+        <div
+          style="
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+          "
+        ></div>
+        <p class="loading-text">جاري إضافة التذكرة...</p>
+      </div>
+    </div>
 
-<style>
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
+    <style>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
 
-  <script src="./script.js"></script>
-</body>
-
+    <script src="./script.js"></script>
+  </body>
 </html>
