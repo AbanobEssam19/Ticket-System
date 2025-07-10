@@ -4,8 +4,10 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const loadingOverlay = document.getElementById("loadingOverlay");
+loadingOverlay.style.display = "flex"; // Show before fetch
+
     const form = event.target;
-    const formData = new FormData(form);
 
     let userName = sessionStorage.getItem("name");
 
@@ -41,22 +43,25 @@ document
     const seatNum = seatSession.split("-")[1];
     const seatPosition = seatSession.split("-")[2];
 
+    const image = document.getElementById("imageUpload").files[0];
+
+    const formData = new FormData();
+    formData.append("name", userName);
+    formData.append("phone", phone);
+    formData.append("row", row);
+    formData.append("seatNum", seatNum);
+    formData.append("seatPosition", seatPosition);
+    formData.append("domain", window.location.origin);
+    formData.append("image", image); // 👈 Add the file here
+
     const res = await fetch("/ticket/add", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: userName,
-        phone: phone,
-        row: row,
-        seatNum: seatNum,
-        seatPosition: seatPosition,
-        domain: window.location.origin,
-      }),
+      body: formData, // 👈 No need to set headers manually
     });
 
     const result = await res.json();
+
+    loadingOverlay.style.display = "none"; // Hide after fetch completes or fails
 
     if (res.ok) {
       const qrData = result.qr;

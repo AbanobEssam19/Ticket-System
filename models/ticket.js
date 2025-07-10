@@ -30,6 +30,10 @@ const Tickets = mongoose.model('Tickets', {
         type: seatInfo,
         required: true
     },
+    image: {
+        type: String,
+        default: null
+    },
     isScanned: {
         type: Boolean,
         default: false
