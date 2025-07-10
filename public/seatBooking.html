@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Theater Seat Booking</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./seatBooking.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>حجز المقعد</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./seatBooking.css" />
+  </head>
+  <body>
+    <div class="container my-4 theater">
+      <div class="theater-layout">
+        <div class="floor-toggle form-check form-switch mb-3 align-self-end">
+          <!-- checkbox keeps state; label becomes the slider -->
+          <input class="form-check-input" type="checkbox" id="floorSwitch" />
+          <label class="form-check-label" for="floorSwitch">
+            الدور العلوي
+          </label>
+        </div>
+        <!-- Right Side -->
+        <div class="sides">
+          <div id="right-seating">
+            <div class="side-title">Right Side</div>
+          </div>
 
-<div class="container my-4 theater">
-  <div class="theater-layout">
-     <!-- Right Side -->
-      <div class="sides">
-        <div id="right-seating">
-          <div class="side-title">Right Side</div>
+          <div id="middle-seating">
+
+          </div>
+
+          <!-- Left Side -->
+          <div id="left-seating">
+            <div class="side-title">Left Side</div>
+          </div>
         </div>
-    
-    
-        <!-- Left Side -->
-        <div id="left-seating">
-          <div class="side-title">Left Side</div>
-        </div>
+
+        <div class="stage mt-4">STAGE</div>
+        <button id="submitButton">تأكيد</button>
       </div>
-      
-    <div class="stage mt-4">STAGE</div>
-    <button id="submitButton">تأكيد</button>
-  </div>
+    </div>
 
-</div>
-
-<script src="./seatBooking.js"></script>
-
-</body>
+    <script src="./seatBooking.js"></script>
+  </body>
 </html>

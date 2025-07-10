@@ -63,7 +63,7 @@
                   <i class="fas fa-trash" onclick="deleteTicket(event)"></i>
                   <div class="ticket-info">
                   <div class="ticket-name">${i++} - ${ticket.name}</div>
-                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seat.row + ' ' + ticket.seat.number
+                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seat.row + ticket.seat.number +  ' ' + (ticket.seat.seatPosition == "up" ? "U" : "D")
           }
                 </div>
                   </div>

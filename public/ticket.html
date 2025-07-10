@@ -189,7 +189,7 @@
     
             document.getElementById('name').textContent = data.ticket.name;
             // document.getElementById('phone').textContent = data.ticket.phone;
-            document.getElementById('seatNo').textContent = data.ticket.seat.row + ' ' + data.ticket.seat.number;
+            document.getElementById('seatNo').textContent = data.ticket.seat.row + data.ticket.seat.number + ' ' + (data.ticket.seat.seatPosition == "up" ? "U" : "D");
         }
     
         loadTicket();

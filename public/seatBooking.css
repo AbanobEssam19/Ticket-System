@@ -58,6 +58,10 @@ margin-bottom: 4px;
 flex-direction: row;
 }
 
+#middle-seating .seat-row{
+flex-direction: row;
+}
+
 .seat {
 width: 22px;
 height: 22px;
@@ -202,4 +206,38 @@ padding: 4px 14px;
 font-size: 0.9rem;
 padding: 10px;
 }
+}
+
+.floor-toggle {
+  font-family: 'Cairo', sans-serif;
+  color: #00ffc8;
+  user-select: none;
+}
+
+/* override Bootstrap switch thumb so it matches your neon palette */
+.floor-toggle .form-check-input {
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+  background-color: #1e2a38;
+  border: 2px solid #00ffc8aa;
+  transition: all .3s ease;
+}
+
+.floor-toggle .form-check-label{
+  padding-left: 15px;
+}
+
+.floor-toggle .form-check-input:checked {
+  background-color: #00ffc8;
+  border-color: #00ffc8;
+}
+
+.floor-toggle .form-check-input:focus {
+  box-shadow: none;
+}
+
+@media (max-width:768px) {
+  .floor-toggle { font-size: .8rem; }
+  .floor-toggle .form-check-input { width: 44px; height: 22px; }
 }

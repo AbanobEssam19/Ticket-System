@@ -28,12 +28,12 @@ app.use(async (req, res, next) => {
 
 
 app.post('/ticket/add', async (req, res) => {
-  const { name, phone, row, seatNum, domain } = req.body;
-  const existTicket = await tickets.findOne({ seat: { row: row, number: seatNum } });
+  const { name, phone, row, seatNum, seatPosition, domain } = req.body;
+  const existTicket = await tickets.findOne({ seat: { row: row, number: seatNum, seatPosition: seatPosition } });
   if (existTicket) {
     return res.status(400).json({ messege: 'seat is already taken' });
   }
-  let ticket = new tickets({ name, phone, seat: { row, number: seatNum } });
+  let ticket = new tickets({ name, phone, seat: { row, number: seatNum, seatPosition: seatPosition } });
   ticket = await ticket.save();
   const link = `${domain}/ticket/${ticket._id}`;
   const qr = await QRCODE(link);

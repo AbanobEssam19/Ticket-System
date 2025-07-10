@@ -39,6 +39,7 @@ document
     document.getElementById("errorSeatMessege").style.display = "none";
     const row = seatSession.split("-")[0];
     const seatNum = seatSession.split("-")[1];
+    const seatPosition = seatSession.split("-")[2];
 
     const res = await fetch("/ticket/add", {
       method: "POST",
@@ -50,6 +51,7 @@ document
         phone: phone,
         row: row,
         seatNum: seatNum,
+        seatPosition: seatPosition,
         domain: window.location.origin,
       }),
     });
@@ -122,7 +124,8 @@ const seatSession = sessionStorage.getItem("selectedSeat");
 if (seatSession) {
   const row = seatSession.split("-")[0];
   const number = seatSession.split("-")[1];
-  document.getElementById("seatNumber").textContent = `${row}${number}`;
+  const position = seatSession.split("-")[2];
+  document.getElementById("seatNumber").textContent = `${row}${number}-${position == "up" ? "U" : "D"}`;
   document.getElementById("seatNumber").style.display = "block";
 } else {
   document.getElementById("seatNumber").style.display = "none";
