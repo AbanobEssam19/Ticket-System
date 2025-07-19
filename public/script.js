@@ -44,6 +44,12 @@ loadingOverlay.style.display = "flex"; // Show before fetch
     const seatPosition = seatSession.split("-")[2];
 
     const image = document.getElementById("imageUpload").files[0];
+    const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1024,
+    useWebWorker: true
+    };
+    const compressedImage = await imageCompression(image, options);
 
     const formData = new FormData();
     formData.append("name", userName);
@@ -52,11 +58,11 @@ loadingOverlay.style.display = "flex"; // Show before fetch
     formData.append("seatNum", seatNum);
     formData.append("seatPosition", seatPosition);
     formData.append("domain", window.location.origin);
-    formData.append("image", image); // 👈 Add the file here
+    formData.append("image", compressedImage); 
 
     const res = await fetch("/ticket/add", {
       method: "POST",
-      body: formData, // 👈 No need to set headers manually
+      body: formData, 
     });
 
     const result = await res.json();

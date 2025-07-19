@@ -22,7 +22,7 @@ const multer = require('multer');
 
 // Store uploaded file in memory buffer
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fileSize: 1 * 1024 * 1024 } });
 
 const app = express();
 app.use(express.json());
