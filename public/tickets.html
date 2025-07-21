@@ -74,12 +74,14 @@
     loadTickets();
     document.getElementById("searchButton").addEventListener("click", () => {
       const val = document.getElementById("searchBar").value;
-      const filteredTickets = tickets.filter(
-        (ticket) =>
-          ticket.name.includes(val) ||
-          ticket.phone.includes(val) ||
-          ticket.seatNum.includes(val)
-      );
+      
+      const filteredTickets = [];
+      for(const ticket of tickets){
+        let seatPosition = ticket.seat.row + ticket.seat.number + ' ' + (ticket.seat.seatPosition == "up" ? "U" : "D");
+        if(ticket.name.includes(val) || ticket.phone.includes(val) || seatPosition.includes(val)){
+          filteredTickets.push(ticket);
+        }
+      }
       const ticketList = document.getElementById("ticket-list");
       ticketList.innerHTML = "";
       let i = 1;
@@ -89,7 +91,7 @@
                   <i class="fas fa-trash" onclick="deleteTicket(event)"></i>
                   <div class="ticket-info">
                   <div class="ticket-name">${i++} - ${ticket.name}</div>
-                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seat.row + ' ' + ticket.seat.number
+                    <div class="ticket-details">📞 ${ticket.phone} · 💺 ${ticket.seat.row + ticket.seat.number +  ' ' + (ticket.seat.seatPosition == "up" ? "U" : "D")
           }
                 </div>
                   </div>
