@@ -49,7 +49,12 @@ loadingOverlay.style.display = "flex"; // Show before fetch
     maxWidthOrHeight: 1024,
     useWebWorker: true
     };
-    const compressedImage = await imageCompression(image, options);
+    let compressedImage = image;
+
+    if(image != null) {
+      compressedImage = await imageCompression(image, options);
+    }
+
 
     const formData = new FormData();
     formData.append("name", userName);
