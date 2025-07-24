@@ -1,52 +1,55 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
 
-const seatInfo = mongoose.Schema({
-    row: {
-        type: String,
-        required: true
-    },
-    number: {
-        type: Number,
-        required: true
-    },
-    seatPosition: {
-        type: String,
-        default: 'down',
-        required: true
-    }
-})
+// Seat sub-schema
+const seatInfo = new mongoose.Schema({
+  row: {
+    type: String,
+    required: true
+  },
+  number: {
+    type: Number,
+    required: true
+  },
+  seatPosition: {
+    type: String,
+    default: 'down',
+    required: true
+  }
+}, { _id: false }); // Important: avoid nested _id
 
-const Tickets = mongoose.model('Tickets', {
-    name: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true
-    },
-    seat: {
-        type: seatInfo,
-        required: true
-    },
-    image: {
-        type: String,
-        default: null
-    },
-    isScanned: {
-        type: Boolean,
-        default: false
-    }
-})
+// Main ticket schema
+const ticketSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  seat: {
+    type: seatInfo,
+    required: true
+  },
+  image: {
+    type: String,
+    default: null
+  },
+  isScanned: {
+    type: Boolean,
+    default: false
+  },
+  createdBy: {
+    type: String
+  },
+});
 
-// function handleTicketValidation(ticket) {
-//     const schema = Joi.object({
-//         name: Joi.string().min(3).max(120).required(),
-//         phone:Joi.string().min(11).max(11).required(),
-//         seatNum: Joi.string().min(2).max(20).required(),
-//     });
-//     return schema.validate(ticket, { abortEarly: false });
-// }
+ticketSchema.index({
+  'seat.row': 1,
+  'seat.number': 1,
+  'seat.seatPosition': 1
+}, { unique: true });
 
-module.exports = Tickets
+const Tickets = mongoose.model('Tickets', ticketSchema);
+
+module.exports = Tickets;

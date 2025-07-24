@@ -40,6 +40,7 @@ app.use(async (req, res, next) => {
 });
 
 const streamifier = require("streamifier");
+const { number } = require('joi');
 
 async function uploadToCloudinary(buffer) {
   return await new Promise((resolve, reject) => {
@@ -57,11 +58,21 @@ async function uploadToCloudinary(buffer) {
 
 
 app.post('/ticket/add', upload.single('image'), async (req, res) => {
-  const { name, phone, row, seatNum, seatPosition, domain } = req.body;
-  const existTicket = await tickets.findOne({ seat: { row: row, number: seatNum, seatPosition: seatPosition } });
-  if (existTicket) {
-    return res.status(400).json({ messege: 'seat is already taken' });
-  }
+  try {
+    const { name, phone, row, seatNum, seatPosition, domain, token } = req.body;
+
+    let user = "";
+    let id;
+
+    await jwt.verify(token, process.env.JWT_PRIVATE_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(400).json({ messege: 'Invalid token' });
+      }
+      user = decoded.name;
+      id = decoded._id;
+    });
+
+
 
     // Upload image buffer to Cloudinary if image was provided
     let imageUrl = null;
@@ -69,11 +80,21 @@ app.post('/ticket/add', upload.single('image'), async (req, res) => {
       imageUrl = await uploadToCloudinary(req.file.buffer); // ✅ now you wait
 
     }
-  let ticket = new tickets({ name, phone, seat: { row, number: seatNum, seatPosition: seatPosition}, image: imageUrl  });
-  ticket = await ticket.save();
-  const link = `${domain}/ticket/${ticket._id}`;
-  const qr = await QRCODE(link);
-  return res.status(200).json({ ticket: ticket, qr: qr, link: link });
+    let ticket = new tickets({ name, phone, seat: { row, number: seatNum, seatPosition: seatPosition }, image: imageUrl, createdBy: user });
+    ticket = await ticket.save();
+    await users.findOneAndUpdate({ _id: id }, { $inc: { numberOfTickets: 1 } });
+    const link = `${domain}/ticket/${ticket._id}`;
+    const qr = await QRCODE(link);
+    return res.status(200).json({ ticket: ticket, qr: qr, link: link });
+  }
+  catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ message: 'Seat is already taken' });
+    }
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+
 });
 
 app.get('/api/ticket/:id', async (req, res) => {
@@ -86,6 +107,11 @@ app.get('/api/tickets', async (req, res) => {
   return res.status(200).json({ tickets: ticket });
 });
 
+app.get('/api/users', async (req, res) => {
+  const user = await users.find({});
+  return res.status(200).json({ users: user });
+});
+
 app.get('/ticket/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/ticket.html'));
 });
@@ -95,6 +121,8 @@ app.get('/tickets', (req, res) => {
 });
 
 app.delete('/api/ticket/delete/:id', async (req, res) => {
+  const ticket = await tickets.findById(req.params.id);
+  await users.findOneAndUpdate({ name: ticket.createdBy }, { $inc: { numberOfTickets: -1 } });
   await tickets.findByIdAndDelete(req.params.id);
   return res.status(200).json({ messege: 'deleted successfully' });
 });
@@ -158,6 +186,10 @@ app.get('/api/selectedSeats', async (req, res) => {
   const allTickets = await tickets.find({}, 'seat');
   const seatInfos = allTickets.map(ticket => ticket.seat);
   return res.status(200).json({ selectedSeats: seatInfos });
+});
+
+app.get('/report', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/report.html'));
 });
 
 module.exports = app;

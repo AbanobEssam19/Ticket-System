@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    numberOfTickets: {
+        type: Number,
+        default: 0
     }
 });
 

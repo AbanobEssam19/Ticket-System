@@ -5,7 +5,6 @@ document
     event.preventDefault();
 
     const loadingOverlay = document.getElementById("loadingOverlay");
-loadingOverlay.style.display = "flex"; // Show before fetch
 
     const form = event.target;
 
@@ -64,6 +63,9 @@ loadingOverlay.style.display = "flex"; // Show before fetch
     formData.append("seatPosition", seatPosition);
     formData.append("domain", window.location.origin);
     formData.append("image", compressedImage); 
+    formData.append("token", localStorage.getItem("token"));
+
+    loadingOverlay.style.display = "flex"; // Show before fetch
 
     const res = await fetch("/ticket/add", {
       method: "POST",
@@ -168,4 +170,9 @@ if (phoneSession) {
 document.getElementById('imageUpload').addEventListener('change', function () {
   const fileNameSpan = document.getElementById('fileName');
   fileNameSpan.textContent = this.files.length ? this.files[0].name : 'لم يُحدَّد ملف بعد';
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  localStorage.removeItem("token");
+  window.location.href = "/login";
 });
