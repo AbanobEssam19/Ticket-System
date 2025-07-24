@@ -5,12 +5,23 @@ async function fetchUsers() {
     const res = await fetch("/api/users");
     const data = await res.json();
     users = data.users;
+
+    users.sort((a, b) => b.numberOfTickets - a.numberOfTickets);
+
+    const totalTickets = users.reduce((sum, user) => sum + user.numberOfTickets, 0);
+    document.getElementById("total").textContent = `إجمالي التذاكر: ${totalTickets}`;
+
+    const listHtml = users.map(user => `
+      <li>
+        <span class="name">${user.name}</span>
+        <span class="count">${user.numberOfTickets}</span>
+      </li>
+    `).join("");
+
+    document.getElementById("names").innerHTML = listHtml;
   } catch (error) {
     console.error("Error fetching users:", error);
   }
-  document.querySelector("div").innerHTML = users.map(user => `<p>${user.name} number of tickets: ${user.numberOfTickets}</p>`).join("");
-  return;
 }
 
 fetchUsers();
-
